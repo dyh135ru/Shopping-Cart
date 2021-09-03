@@ -1,4 +1,4 @@
-// simulate getting products from DataBase
+// sumulate getting products from DataBase
 const products = [
   { name: "Apples_:", country: "Italy", cost: 3, instock: 10 },
   { name: "Oranges:", country: "Spain", cost: 4, instock: 3 },
@@ -106,9 +106,10 @@ const Products = (props) => {
     item[0].instock = item[0].instock - 1;
     console.log(`add to Cart ${JSON.stringify(item)}`);
     setCart([...cart, ...item]);
-
   };
   const deleteCartItem = (delIndex) => {
+    // this is the index in the cart not in the Product List
+
     let newCart = cart.filter((item, i) => delIndex != i);
     let target = cart.filter((item, index) => delIndex == index);
     let newItems = items.map((item, index) => {
@@ -123,12 +124,11 @@ const Products = (props) => {
   let list = items.map((item, index) => {
     let n = index + 1049;
     let uhit = "https://picsum.photos/" + n;
-
     return (
       <li key={index}>
         <Image src={uhit} width={70} roundedCircle></Image>
         <Button variant="primary" size="large">
-          {item.name}:{item.cost}
+          {item.name}:${item.cost}-Stock={item.instock}
         </Button>
         <input name={item.name} type="submit" onClick={addToCart}></input>
       </li>
@@ -171,9 +171,9 @@ const Products = (props) => {
     const reducer = (accum, current) => accum + current;
     let newTotal = costs.reduce(reducer, 0);
     console.log(`total updated to ${newTotal}`);
+    //cart.map((item, index) => deleteCartItem(index));
     return newTotal;
   };
-  // TODO: implement the restockProducts function
   const restockProducts = (url) => {
     doFetch(url);
     let newItems = data.map((item) => {
